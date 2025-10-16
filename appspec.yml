@@ -1,0 +1,17 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+  - destination: /home/ubuntu/app_agriculture_yield_prediction_ml
+
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_containers.sh
+      timeout: 300
+      runas: root
+  
+  AfterInstall:
+    - location: scripts/start_containers.sh
+      timeout: 300
+      runas: root

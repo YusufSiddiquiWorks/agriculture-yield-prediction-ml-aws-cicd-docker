@@ -1,0 +1,38 @@
+# Large CSV data files (not needed in CI/CD)
+notebook/data/*.csv
+notebook/data/
+*.csv
+
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments (local development only)
+venv/
+env/
+ENV/
+.venv/
+
+# IDE files (local development only)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log files
+*.log
+
+# Environment variables (use AWS Parameter Store/Secrets Manager instead)
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp

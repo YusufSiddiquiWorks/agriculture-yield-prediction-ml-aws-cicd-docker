@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        @font-face {
+            font-family: 'Uni Sans';
+            src: url('{{ url_for('static', filename='fonts/Uni Sans Heavy.otf') }}') format('opentype');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Uni Sans';
+            src: url('{{ url_for('static', filename='fonts/Uni Sans Thin.otf') }}') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Uni Sans';
+            src: url('{{ url_for('static', filename='fonts/Uni Sans Heavy Italic.otf') }}') format('opentype');
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        @font-face {
+            font-family: 'Uni Sans';
+            src: url('{{ url_for('static', filename='fonts/Uni Sans Thin Italic.otf') }}') format('opentype');
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        body {
+            font-family: 'Uni Sans';
+            color: white;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            filter: blur(5px);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Uni Sans';
+            font-size: 4rem;
+            margin-bottom: 20px;
+            
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Added a subtle shadow */
+        }
+
+        p {
+            font-family: 'Uni Sans';
+            font-size: 2rem;
+            margin-bottom: 20px;
+            
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Added a subtle shadow */
+        }
+
+        .btn-predict {
+            font-family: 'Uni Sans';
+            background-color: #f00; /* Red */
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Ensure it's treated like a button */
+        }
+
+        .btn-predict:hover {
+            background-color: #c00;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-image" id="hero-image"></div>
+
+    <div class="container">
+        <h1>Predicted Yield</h1>
+        <p>{{ prediction_text }}</p>
+        <a href="/" class="btn-predict">Go Back to Home</a>
+        <a href="/index" class="btn-predict">Go Back to Prediction</a>
+    </div>
+
+    <script>
+        // Set background and custom message based on yield value
+        const predictionText = "{{ prediction_text }}";
+        const yieldValue = parseFloat(predictionText.match(/([\d.]+)/)[0]);
+    
+        let backgroundUrl;
+        let customMessage;
+    
+        if (yieldValue < 2) {
+            backgroundUrl = "{{ url_for('static', filename='low_yield.jpeg') }}";
+            customMessage = `Unfortunately, it looks like the yield is below average at ${yieldValue} tons per hectare. We understand the challenges this may bring, but with the right adjustments, there's always potential for improvement.`;
+        } else if (yieldValue >= 2 && yieldValue <= 5) {
+            backgroundUrl = "{{ url_for('static', filename='medium_yield.jpg') }}";
+            customMessage = `Great job! Your yield is decent at ${yieldValue} tons per hectare. This shows that you're on the right track. With a bit more optimization, you could see even better results.`;
+        } else {
+            backgroundUrl = "{{ url_for('static', filename='high_yield.jpg') }}";
+            customMessage = `Congratulations! You've achieved an excellent yield of ${yieldValue} tons per hectare. This is a great outcome, and it reflects your hard work and the favorable conditions. Keep up the amazing work!`;
+        }
+    
+        // Set the background image
+        document.getElementById('hero-image').style.backgroundImage = `url('${backgroundUrl}')`;
+    
+        // Update the message
+        document.querySelector('p').textContent = customMessage;
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+# Notebook files (not needed in production container)
+notebook/
+*.ipynb
+
+# Large data files
+*.csv
+data/
+
+# Git metadata (not needed in container)
+.git/
+.gitignore
+README.md
+*.md
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments (container has its own)
+venv/
+env/
+.venv/
+ENV/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files (container logging should go to CloudWatch)
+*.log
+
+# Development environment files
+.env
+.env.local
+
+# CI/CD files (not needed inside container)
+buildspec.yml
+.github/
+.gitlab-ci.yml
+
+# Use production requirements only
+requirements.txt

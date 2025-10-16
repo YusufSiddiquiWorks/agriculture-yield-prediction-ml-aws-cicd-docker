@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /ml/docker-credential/username
+    DOCKER_REGISTRY_PASSWORD: /ml/docker-credential/password
+    DOCKER_REGISTRY_URL: /ml/docker-registry/url
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r dockerrequirements.txt
+      - chmod +x scripts/*.sh
+  
+  build:
+    commands:
+      - echo "Buidling Docker Image"
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/agriculture-yield-prediction-ml:aws_prod_v1" . --no-cache
+      - echo "Docker Build completed successfully!"
+      - echo "Pushing Docker Build"
+      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/agriculture-yield-prediction-ml:aws_prod_v1"
+      - echo "Docker Build pushed successfully."
+  post_build:
+    commands:
+     - echo "Build completed successfully!"
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**/*
