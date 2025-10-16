@@ -4,7 +4,7 @@ set -e
 
 echo "Docker pull starting"
 
-sudo docker pull yswork/music-customer-churn-prediction-ml:aws_prod_v1
+sudo docker pull yswork/agriculture-yield-prediction-ml:aws_prod_v1
 
 echo "Docker image yswork/agriculture-yield-prediction-ml:aws_prod_v1 pulled successfully"
 
