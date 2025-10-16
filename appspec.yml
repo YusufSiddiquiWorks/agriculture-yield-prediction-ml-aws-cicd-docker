@@ -3,7 +3,8 @@ os: linux
 
 files:
   - source: /
-  - destination: /home/ubuntu/app_agriculture_yield_prediction_ml
+    destination: /home/ubuntu/app_agriculture_yield_prediction_ml
+    file_exists_behavior: OVERWRITE
 
 hooks:
   ApplicationStop:
